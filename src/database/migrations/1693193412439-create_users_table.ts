@@ -54,8 +54,7 @@ export class CreateUsersTable1693193412439 implements MigrationInterface {
           },
           {
             name: 'province',
-            type: 'varchar',
-            length: '100',
+            type: 'int',
             isNullable: true,
           },
           {

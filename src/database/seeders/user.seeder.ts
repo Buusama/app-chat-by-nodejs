@@ -18,10 +18,10 @@ export default class UserSeeder extends Seeder {
           phone_number: '0123456789',
           level: '1',
           certificate: 'https://i.pravatar.cc/300',
-          province: 'Hà Nội',
+          province: '2',
           password: await bcrypt.hash('password', 10),
           birthday: '1999-01-01',
-          nationality: 'Việt Nam',
+          nationality: 'VN',
         },
         {
           name: 'user2',
@@ -31,10 +31,10 @@ export default class UserSeeder extends Seeder {
           phone_number: '0123456789',
           level: '5',
           certificate: 'https://i.pravatar.cc/300',
-          province: 'Hà Nội',
+          province: '1',
           password: await bcrypt.hash('password', 10),
           birthday: '1999-01-01',
-          nationality: 'Việt Nam',
+          nationality: 'VN',
         },
       ])
       .execute();

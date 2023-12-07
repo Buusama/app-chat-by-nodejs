@@ -1,9 +1,7 @@
 import {
   Controller,
   Get,
-  Post,
   Param,
-  Body,
   UseInterceptors,
   UseGuards,
   Query,
@@ -20,8 +18,8 @@ import { EntityNotFoundErrorFilter } from 'src/exception_filters/entity-not-foun
 
 @ApiTags('users')
 @UseInterceptors(TransformInterceptor)
-@ApiBearerAuth('access-token')
-@UseGuards(AuthGuard('jwt'))
+// @ApiBearerAuth('access-token')
+// @UseGuards(AuthGuard('jwt'))
 @Controller('users')
 export class UsersController {
   constructor(private readonly usersService: UsersService) {}
