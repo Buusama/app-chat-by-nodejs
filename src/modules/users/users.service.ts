@@ -26,6 +26,37 @@ export class UsersService extends PageService {
       getListUsersDto,
     );
     queryBuilder.where('table.deleted_at is null');
+
+    const template: string[] = [
+      getListUsersDto.level
+        ? `(1 - ABS(table.level - ${getListUsersDto.level}) / ${getListUsersDto.level})`
+        : '1',
+      getListUsersDto.gender
+        ? `if(table.gender = ${getListUsersDto.gender}, 1, 0)`
+        : '1',
+      getListUsersDto.nationality
+        ? `if(table.nationality = '${getListUsersDto.nationality}', 1, 0)`
+        : '1',
+      getListUsersDto.province
+        ? `if(table.province = '${getListUsersDto.province}', 1, 0)`
+        : '1',
+      getListUsersDto.age
+        ? `(1 - ABS(DATEDIFF(table.birthday, NOW()) / 365 - ${getListUsersDto.age}) / ${getListUsersDto.age})`
+        : '1',
+    ];
+    const selectFilter = template.join(' + ');
+
+    if (
+      getListUsersDto.age ||
+      getListUsersDto.gender ||
+      getListUsersDto.level ||
+      getListUsersDto.nationality ||
+      getListUsersDto.province
+    ) {
+      queryBuilder.addSelect(selectFilter, 'filter');
+      queryBuilder.orderBy('filter', 'DESC');
+    }
+
     const itemCount = await queryBuilder.getCount();
     const { entities } = await queryBuilder.getRawAndEntities();
     const pageMeta = new PageMetaDto(getListUsersDto, itemCount);
