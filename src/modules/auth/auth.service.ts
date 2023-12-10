@@ -51,4 +51,8 @@ export class AuthService {
     await this.usersRepository.save(user);
     return new PageResponseDto(user);
   }
+
+  async getProfile(user: User): Promise<User> {
+    return user;
+  }
 }
