@@ -20,6 +20,7 @@ export class UsersService extends PageService {
 
   async getUsers(
     getListUsersDto: GetListUsersDto,
+    userId: number,
   ): Promise<PageResponseDto<User>> {
     const queryBuilder = await this.paginate(
       this.usersRepository,
@@ -27,6 +28,7 @@ export class UsersService extends PageService {
     );
     queryBuilder
       .select([
+        'table.id as id',
         'name',
         'gender',
         'phone_number',
@@ -37,8 +39,10 @@ export class UsersService extends PageService {
         'birthday',
         'nationality',
       ])
-      .where('table.deleted_at is null');
-
+      .leftJoin('bookmarks', 'bookmarks', `table.id = bookmarks.receiver_id and bookmarks.sender_id = ${userId}`)
+      .addSelect('if(bookmarks.receiver_id is not null, 1, 0)', 'bookmarked')
+      .where('table.deleted_at is null')
+      .andWhere('table.id != :id', { id: userId });
     const template: string[] = [
       getListUsersDto.level
         ? `((1 - ABS(table.level - ${getListUsersDto.level}) / ${getListUsersDto.level})`
