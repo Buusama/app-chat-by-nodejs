@@ -19,7 +19,7 @@ export class User {
   email: string;
 
   @Column({ length: 20, nullable: true })
-  phone_number: string;
+  phone: string;
 
   @Column()
   level: string;

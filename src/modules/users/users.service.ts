@@ -31,7 +31,7 @@ export class UsersService extends PageService {
         'table.id as id',
         'name',
         'gender',
-        'phone_number',
+        'phone',
         'avatar',
         'level',
         'certificate',
@@ -124,9 +124,11 @@ export class UsersService extends PageService {
       .findOne({
         where: { id: user_id },
         select: [
+          'id',
           'name',
           'gender',
-          'phone_number',
+          'email',
+          'phone',
           'avatar',
           'level',
           'certificate',
