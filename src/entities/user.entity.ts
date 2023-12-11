@@ -1,6 +1,7 @@
 import { Column, PrimaryGeneratedColumn, Entity, BeforeInsert, OneToMany } from 'typeorm';
 import * as bcrypt from 'bcrypt';
 import { Bookmark } from './bookmark.entity';
+import { Friend } from './friend.entity';
 
 @Entity('users')
 export class User {
@@ -47,4 +48,7 @@ export class User {
 
   @OneToMany(() => Bookmark, (bookmark) => bookmark.receiver)
   bookmarks: Bookmark[];
+
+  @OneToMany(() => Friend, (friend) => friend.receiver)
+  friends: Friend[];
 }

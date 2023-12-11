@@ -25,8 +25,7 @@ export class CreateFriendsTable1701443532315 implements MigrationInterface {
           },
           {
             name: 'status',
-            type: 'enum',
-            enum: ['0', '1', '2'],
+            type: 'int',
           },
           {
             name: 'created_at',

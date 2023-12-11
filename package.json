@@ -25,9 +25,11 @@
     "migration:revert": "npm run typeorm migration:revert",
     "migration:create": "typeorm-ts-node-commonjs migration:create",
     "seed:config": "ts-node ./node_modules/@jorgebodega/typeorm-seeding/dist/cli.js config -d ./src/config/database.config.ts",
-    "seed:run": "ts-node ./node_modules/@jorgebodega/typeorm-seeding/dist/cli.js seed -d ./src/config/database.config.ts"
+    "seed:run": "ts-node ./node_modules/@jorgebodega/typeorm-seeding/dist/cli.js seed -d ./src/config/database.config.ts ./src/database/seeders/**/*.ts"
   },
   "dependencies": {
+    "@faker-js/faker": "^8.3.1",
+    "@jorgebodega/typeorm-factory": "^1.4.0",
     "@jorgebodega/typeorm-seeding": "^6.0.1",
     "@nestjs/common": "^10.2.7",
     "@nestjs/config": "^3.0.0",

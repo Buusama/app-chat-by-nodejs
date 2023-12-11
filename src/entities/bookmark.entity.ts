@@ -12,7 +12,7 @@ export class Bookmark {
     @Column({ type: 'int' })
     receiver_id: number;
     
-    @OneToOne(() => User, (user) => user.id)
+    @ManyToOne(() => User, (user) => user.id)
     @JoinColumn({ name: 'sender_id' })
     sender: User;
 
