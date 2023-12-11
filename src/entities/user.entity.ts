@@ -1,5 +1,6 @@
-import { Column, PrimaryGeneratedColumn, Entity, BeforeInsert } from 'typeorm';
+import { Column, PrimaryGeneratedColumn, Entity, BeforeInsert, OneToMany } from 'typeorm';
 import * as bcrypt from 'bcrypt';
+import { Bookmark } from './bookmark.entity';
 
 @Entity('users')
 export class User {
@@ -43,4 +44,7 @@ export class User {
   async hashPassword() {
     this.password = await bcrypt.hash(this.password, 10);
   }
+
+  @OneToMany(() => Bookmark, (bookmark) => bookmark.receiver)
+  bookmarks: Bookmark[];
 }

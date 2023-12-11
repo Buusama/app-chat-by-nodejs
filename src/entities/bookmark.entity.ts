@@ -1,4 +1,4 @@
-import { Column, PrimaryGeneratedColumn, Entity, OneToOne, JoinColumn } from 'typeorm';
+import { Column, PrimaryGeneratedColumn, Entity, OneToOne, JoinColumn, ManyToOne } from 'typeorm';
 import { User } from './user.entity';
 
 @Entity('bookmarks')
@@ -16,7 +16,8 @@ export class Bookmark {
     @JoinColumn({ name: 'sender_id' })
     sender: User;
 
-    @OneToOne(() => User, (user) => user.id)
-    @JoinColumn({ name: 'sender_id' })
+    @ManyToOne(() => User, (user) => user.bookmarks)
+    @JoinColumn({ name: 'receiver_id' })
     receiver: User;
+
 }

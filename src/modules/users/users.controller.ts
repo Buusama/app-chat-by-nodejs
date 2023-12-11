@@ -38,8 +38,8 @@ export class UsersController {
 
   @Get(':id')
   @UseFilters(EntityNotFoundErrorFilter)
-  async getMember(@Param('id') user_id: string) {
-    return this.usersService.getUser(Number(user_id));
+  async getMember(@Param('id') user_id: string, @Req() req) {
+    return this.usersService.getUser(Number(user_id), req.user.id);
   }
 
 }
