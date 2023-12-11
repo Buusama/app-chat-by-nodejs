@@ -15,11 +15,11 @@ export class AuthService {
     @InjectRepository(User)
     private usersRepository: Repository<User>,
     private jwtService: JwtService,
-  ) {}
+  ) { }
 
   async signIn(
     authCredentialsDto: AuthCredentialsDto,
-  ): Promise<{ access_token: string }> {
+  ): Promise<{ access_token: string, user: any }> {
     const { email, password } = authCredentialsDto;
     const user = await this.usersRepository.findOneBy({ email });
 
@@ -30,8 +30,13 @@ export class AuthService {
       };
 
       const accessToken: string = await this.jwtService.sign(payload);
-
-      return { access_token: accessToken };
+      const UserInfo: any = {
+        id: user.id,
+        email: user.email,
+        name: user.name,
+        avatar: user.avatar,
+      }
+      return { access_token: accessToken, user: UserInfo };
     } else {
       throw new UnauthorizedException('Please check');
     }
@@ -45,5 +50,9 @@ export class AuthService {
 
     await this.usersRepository.save(user);
     return new PageResponseDto(user);
+  }
+
+  async getProfile(user: User): Promise<User> {
+    return user;
   }
 }

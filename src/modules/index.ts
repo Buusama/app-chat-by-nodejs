@@ -2,9 +2,10 @@ import { UsersModule } from './users/users.module';
 import { AuthModule } from './auth/auth.module';
 import { AuditObserverModule } from './observers/audit-observer.module';
 import { AwsModule } from './aws/aws.module';
+import { BookmarksModule } from './bookmarks/bookmarks.module';
 class ApplicationModular {
   public static register() {
-    return [UsersModule, AuthModule, AuditObserverModule, AwsModule];
+    return [UsersModule, BookmarksModule, AuthModule, AuditObserverModule, AwsModule];
   }
 }
 

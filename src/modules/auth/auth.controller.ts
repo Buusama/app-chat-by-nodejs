@@ -1,14 +1,15 @@
-import { Controller, Post, Body, Get, UseGuards } from '@nestjs/common';
+import { Controller, Post, Body, Get, UseGuards, Req } from '@nestjs/common';
 import { AuthCredentialsDto } from './dto/auth-credentials.dto';
 import { AuthService } from './auth.service';
 import { AuthGuard } from '@nestjs/passport';
 import { User } from 'src/entities/user.entity';
 import { AuthRegisterDto } from './dto/auth-register.dto';
 import { PageResponseDto } from '../pagination/dto/page-response.dto';
+import { ApiBearerAuth } from '@nestjs/swagger';
 
 @Controller('auth')
 export class AuthController {
-  constructor(private authService: AuthService) {}
+  constructor(private authService: AuthService) { }
 
   @Post('/login')
   signIn(
@@ -22,5 +23,12 @@ export class AuthController {
     @Body() authRegisterDto: AuthRegisterDto,
   ): Promise<PageResponseDto<User>> {
     return this.authService.signUp(authRegisterDto);
+  }
+
+  @ApiBearerAuth('access-token')
+  @UseGuards(AuthGuard('jwt'))
+  @Get('/profile')
+  getProfile(@Req() req): Promise<User> {
+    return this.authService.getProfile(req.user);
   }
 }

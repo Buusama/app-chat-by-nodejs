@@ -5,7 +5,7 @@ import { IsNumber, IsOptional, Min } from 'class-validator';
 import { GlobalEnum } from 'src/commons/enums/global-enum';
 
 export class PageDto {
-  @ApiProperty({ required: false })
+  @ApiProperty({ required: false, enum: SortEnum })
   public sort_enum: SortEnum;
 
   @ApiProperty({ required: false })
