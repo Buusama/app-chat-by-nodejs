@@ -25,13 +25,13 @@ import { EntityNotFoundErrorFilter } from 'src/exception_filters/entity-not-foun
 @UseGuards(AuthGuard('jwt'))
 @Controller('users')
 export class UsersController {
-  constructor(private readonly usersService: UsersService) { }
+  constructor(private readonly usersService: UsersService) {}
 
   @Get()
   @ApiOkResponse({ description: 'List all users' })
   getUsers(
     @Query() getListUsersDto: GetListUsersDto,
-    @Req() req
+    @Req() req,
   ): Promise<PageResponseDto<User>> {
     return this.usersService.getUsers(getListUsersDto, req.user.id);
   }
@@ -41,5 +41,4 @@ export class UsersController {
   async getMember(@Param('id') user_id: string, @Req() req) {
     return this.usersService.getUser(Number(user_id), req.user.id);
   }
-
 }

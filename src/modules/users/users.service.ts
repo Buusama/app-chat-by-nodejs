@@ -39,9 +39,15 @@ export class UsersService extends PageService {
         'birthday',
         'nationality',
       ])
-      .leftJoin('table.bookmarks', 'bookmarks', `bookmarks.sender_id = ${userId}`)
+      .leftJoin(
+        'table.bookmarks',
+        'bookmarks',
+        `bookmarks.sender_id = ${userId}`,
+      )
       .addSelect('if(bookmarks.receiver_id is not null, 1, 0)', 'bookmarked')
-      .addSelect('(SELECT COUNT(bookmarks.id) FROM bookmarks WHERE bookmarks.receiver_id = table.id) AS bookmark_count')
+      .addSelect(
+        '(SELECT COUNT(bookmarks.id) FROM bookmarks WHERE bookmarks.receiver_id = table.id) AS bookmark_count',
+      )
       .where('table.deleted_at is null')
       .andWhere('table.id != :id', { id: userId });
     const template: string[] = [
@@ -120,7 +126,10 @@ export class UsersService extends PageService {
     return this.usersRepository.findOneBy({ email });
   }
 
-  async getUser(user_id: number, current_user_id: number): Promise<PageResponseDto<User>> {
+  async getUser(
+    user_id: number,
+    current_user_id: number,
+  ): Promise<PageResponseDto<User>> {
     const result = await this.usersRepository
       .createQueryBuilder('user')
       .select([
@@ -137,7 +146,11 @@ export class UsersService extends PageService {
         'nationality',
         'IF(bookmarks.receiver_id IS NOT NULL, 1, 0) as bookmarked',
       ])
-      .leftJoin('user.bookmarks', 'bookmarks', `bookmarks.sender_id = ${current_user_id}`)
+      .leftJoin(
+        'user.bookmarks',
+        'bookmarks',
+        `bookmarks.sender_id = ${current_user_id}`,
+      )
       .where('user.id = :userId', { userId: user_id })
       .getRawOne();
 

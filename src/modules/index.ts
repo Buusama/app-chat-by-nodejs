@@ -5,7 +5,13 @@ import { AwsModule } from './aws/aws.module';
 import { BookmarksModule } from './bookmarks/bookmarks.module';
 class ApplicationModular {
   public static register() {
-    return [UsersModule, BookmarksModule, AuthModule, AuditObserverModule, AwsModule];
+    return [
+      UsersModule,
+      BookmarksModule,
+      AuthModule,
+      AuditObserverModule,
+      AwsModule,
+    ];
   }
 }
 

@@ -20,14 +20,25 @@ export class BookmarksService extends PageService {
     super();
   }
   findBookmarks(senderId: number, receiverId: number): Promise<Bookmark> {
-    return this.bookmarksRepository.findOneBy({ sender_id: senderId, receiver_id: receiverId });
+    return this.bookmarksRepository.findOneBy({
+      sender_id: senderId,
+      receiver_id: receiverId,
+    });
   }
-  async create(createBookmarkDto: CreateBookmarkDto, userId: number): Promise<PageResponseDto<Bookmark>> {
+  async create(
+    createBookmarkDto: CreateBookmarkDto,
+    userId: number,
+  ): Promise<PageResponseDto<Bookmark>> {
     const { ...params } = createBookmarkDto;
     const findBookmarks = await this.findBookmarks(userId, params.receiver_id);
-    const friend = await this.friendRepository.findOneBy({ sender_id: userId, receiver_id: params.receiver_id });
-    if (!friend || friend.status === FriendStatusValue.DA_DONG_Y.toString()) {
-      throw new BadRequestException('Các bạn chưa là bạn bè, không thể bookmark');
+    const friend = await this.friendRepository.findOneBy({
+      sender_id: userId,
+      receiver_id: params.receiver_id,
+    });
+    if (!friend || friend.status === FriendStatusValue.DA_DONG_Y) {
+      throw new BadRequestException(
+        'Các bạn chưa là bạn bè, không thể bookmark',
+      );
     }
     if (findBookmarks) {
       await this.bookmarksRepository.delete(findBookmarks.id);

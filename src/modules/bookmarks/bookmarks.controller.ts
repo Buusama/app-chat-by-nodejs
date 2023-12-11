@@ -25,11 +25,14 @@ import { EntityNotFoundErrorFilter } from 'src/exception_filters/entity-not-foun
 @UseGuards(AuthGuard('jwt'))
 @Controller('bookmarks')
 export class BookmarksController {
-  constructor(private readonly bookmarksService: BookmarksService) { }
+  constructor(private readonly bookmarksService: BookmarksService) {}
 
   @Post()
   @UseFilters(EntityNotFoundErrorFilter)
-  async create(@Body() createBookmarkDto: CreateBookmarkDto, @Req() req,): Promise<PageResponseDto<Bookmark>> {
+  async create(
+    @Body() createBookmarkDto: CreateBookmarkDto,
+    @Req() req,
+  ): Promise<PageResponseDto<Bookmark>> {
     const userId = req.user.id;
     return this.bookmarksService.create(createBookmarkDto, userId);
   }

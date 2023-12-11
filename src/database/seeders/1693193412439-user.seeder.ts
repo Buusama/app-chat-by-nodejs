@@ -1,6 +1,6 @@
-import { DataSource } from 'typeorm'
-import { Seeder } from '@jorgebodega/typeorm-seeding'
-import { User } from '../../entities/user.entity'
+import { DataSource } from 'typeorm';
+import { Seeder } from '@jorgebodega/typeorm-seeding';
+import { User } from '../../entities/user.entity';
 import { UserFactory } from '../factories/user.factory';
 import * as bcrypt from 'bcrypt';
 import { faker, fakerJA, fakerVI } from '@faker-js/faker';
@@ -11,7 +11,6 @@ export default class CreateUsers extends Seeder {
     const users: User[] = CreatedUsers;
     await dataSource.createEntityManager().save<User>(users);
 
-    //seed 2 special users email: user1@gmail, user2@gmail
     const specialUsers = [
       {
         name: 'Lê Đức Sơn',
@@ -27,7 +26,7 @@ export default class CreateUsers extends Seeder {
         nationality: 'VN',
       },
       {
-        name: 'Võ Tá Hoan',
+        name: 'Lương Thị Tâm',
         gender: '2',
         avatar: faker.image.avatar(),
         email: 'user2@gmail.com',
@@ -39,12 +38,15 @@ export default class CreateUsers extends Seeder {
         birthday: '1999-01-01',
         nationality: 'VN',
       },
-    ]
+    ];
 
     try {
       await dataSource.createEntityManager().save(User, specialUsers);
     } catch (error) {
-      console.error('Error occurred while seeding special users:', error.message);
+      console.error(
+        'Error occurred while seeding special users:',
+        error.message,
+      );
     }
   }
 }

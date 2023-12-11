@@ -11,4 +11,4 @@ import { Friend } from '../../entities/friend.entity';
   providers: [BookmarksService],
   exports: [BookmarksService],
 })
-export class BookmarksModule { }
+export class BookmarksModule {}

@@ -18,8 +18,12 @@ export default class BookmarkSeeder extends Seeder {
 
         const areFriends = friends.some(
           (friend) =>
-            (friend.sender_id === sender.id && friend.receiver_id === receiver.id && friend.status === FriendStatusValue.DA_DONG_Y) ||
-            (friend.sender_id === receiver.id && friend.receiver_id === sender.id && friend.status === FriendStatusValue.DA_DONG_Y)
+            (friend.sender_id === sender.id &&
+              friend.receiver_id === receiver.id &&
+              friend.status === FriendStatusValue.DA_DONG_Y) ||
+            (friend.sender_id === receiver.id &&
+              friend.receiver_id === sender.id &&
+              friend.status === FriendStatusValue.DA_DONG_Y),
         );
 
         if (sender.id !== receiver.id && areFriends && Math.random() < 0.4) {

@@ -1,4 +1,10 @@
-import { Column, PrimaryGeneratedColumn, Entity, BeforeInsert, OneToMany } from 'typeorm';
+import {
+  Column,
+  PrimaryGeneratedColumn,
+  Entity,
+  BeforeInsert,
+  OneToMany,
+} from 'typeorm';
 import * as bcrypt from 'bcrypt';
 import { Bookmark } from './bookmark.entity';
 import { Friend } from './friend.entity';
