@@ -32,9 +32,10 @@
 $ npm install
 ```
 
-Run seeder
+Run seeder && migrate
 ```bash
-$ npm run seed:run ./src/database/seeders/user.seeder.ts
+$ npm run migration:run
+$ npm run seed:run
 ```
 
 ## Running the app

@@ -52,7 +52,7 @@ export class UsersService extends PageService {
       .andWhere('table.id != :id', { id: userId });
     const template: string[] = [
       getListUsersDto.level
-        ? `((1 - ABS(table.level - ${getListUsersDto.level}) / ${getListUsersDto.level})`
+        ? `((1 - (ABS(table.level - ${getListUsersDto.level}) / ${getListUsersDto.level}))`
         : '(1',
       getListUsersDto.gender
         ? `if(table.gender = ${getListUsersDto.gender}, 1, 0)`
@@ -64,7 +64,7 @@ export class UsersService extends PageService {
         ? `if(table.province = '${getListUsersDto.province}', 1, 0)`
         : '1',
       getListUsersDto.age
-        ? `(1 - ABS(DATEDIFF(table.birthday, NOW()) / 365 - ${getListUsersDto.age}) / ${getListUsersDto.age}))/5*100`
+        ? `(1- ABS(ROUND(DATEDIFF(CURDATE(), table.birthday) / 365, 0)-${getListUsersDto.age}) / ${getListUsersDto.age}) )/5*100`
         : '1)/5*100',
     ];
     const selectFilter = template.join(' + ');
@@ -150,6 +150,14 @@ export class UsersService extends PageService {
         'user.bookmarks',
         'bookmarks',
         `bookmarks.sender_id = ${current_user_id}`,
+      )
+      .addSelect(
+        `(SELECT friends.status 
+          FROM friends 
+          WHERE (friends.receiver_id = ${user_id} AND friends.sender_id = ${current_user_id})
+            OR (friends.receiver_id = ${current_user_id} AND friends.sender_id = ${user_id})
+          LIMIT 1
+        ) AS friend_status`,
       )
       .where('user.id = :userId', { userId: user_id })
       .getRawOne();
