@@ -2,9 +2,7 @@ import { ApiProperty } from '@nestjs/swagger';
 import { GenderValue } from 'src/commons/enums/user/gender-enum';
 import { LevelValue } from 'src/commons/enums/user/level-enum';
 import { NationalityLabel } from 'src/commons/enums/user/nationality-enum';
-import {
-  ProvinceValue,
-} from 'src/commons/enums/user/province-enum';
+import { ProvinceValue } from 'src/commons/enums/user/province-enum';
 import { PageDto } from 'src/modules/pagination/dto/page.dto';
 
 export class GetListUsersDto extends PageDto {

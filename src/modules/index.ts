@@ -5,6 +5,7 @@ import { AwsModule } from './aws/aws.module';
 import { BookmarksModule } from './bookmarks/bookmarks.module';
 import { WebsocketModule } from './websocket/websocket.module';
 import { FriendsModule } from './friends/friends.module';
+import { NotificationsModule } from './notifications/notifications.module';
 class ApplicationModular {
   public static register() {
     return [
@@ -15,6 +16,7 @@ class ApplicationModular {
       AwsModule,
       WebsocketModule,
       FriendsModule,
+      NotificationsModule,
     ];
   }
 }

@@ -9,6 +9,7 @@ import {
   Post,
   Body,
   Req,
+  Delete,
 } from '@nestjs/common';
 import { BookmarksService } from './bookmarks.service';
 import { Bookmark } from '../../entities/bookmark.entity';
@@ -23,17 +24,25 @@ import { EntityNotFoundErrorFilter } from 'src/exception_filters/entity-not-foun
 @UseInterceptors(TransformInterceptor)
 @ApiBearerAuth('access-token')
 @UseGuards(AuthGuard('jwt'))
-@Controller('bookmarks')
+@Controller('users/:id/bookmarks')
 export class BookmarksController {
   constructor(private readonly bookmarksService: BookmarksService) {}
+
+  @Delete()
+  @UseFilters(EntityNotFoundErrorFilter)
+  async delete(
+    @Param('id') receiver_id: number,
+    @Req() req,
+  ): Promise<PageResponseDto<Bookmark>> {
+    return this.bookmarksService.delete(req.user.id, receiver_id);
+  }
 
   @Post()
   @UseFilters(EntityNotFoundErrorFilter)
   async create(
-    @Body() createBookmarkDto: CreateBookmarkDto,
+    @Param('id') receiver_id: number,
     @Req() req,
   ): Promise<PageResponseDto<Bookmark>> {
-    const userId = req.user.id;
-    return this.bookmarksService.create(createBookmarkDto, userId);
+    return this.bookmarksService.create(req.user.id, receiver_id);
   }
 }

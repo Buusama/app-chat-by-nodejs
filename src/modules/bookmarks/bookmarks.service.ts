@@ -8,6 +8,7 @@ import { PageService } from '../pagination/page.service';
 import { Bookmark } from 'src/entities/bookmark.entity';
 import { Friend } from 'src/entities/friend.entity';
 import { FriendStatusValue } from 'src/commons/enums/friend/status-enum';
+import { User } from 'src/entities/user.entity';
 
 @Injectable()
 export class BookmarksService extends PageService {
@@ -16,6 +17,8 @@ export class BookmarksService extends PageService {
     private bookmarksRepository: Repository<Bookmark>,
     @InjectRepository(Friend)
     private friendRepository: Repository<Friend>,
+    @InjectRepository(User)
+    private usersRepository: Repository<User>,
   ) {
     super();
   }
@@ -26,27 +29,53 @@ export class BookmarksService extends PageService {
     });
   }
   async create(
-    createBookmarkDto: CreateBookmarkDto,
     userId: number,
+    receiver_id: number,
   ): Promise<PageResponseDto<Bookmark>> {
-    const { ...params } = createBookmarkDto;
-    const findBookmarks = await this.findBookmarks(userId, params.receiver_id);
+    const user = this.usersRepository.findOneBy({ id: receiver_id });
+    if (!user) {
+      throw new BadRequestException('Người dùng không tồn tại');
+    }
     const friend = await this.friendRepository.findOneBy({
       sender_id: userId,
-      receiver_id: params.receiver_id,
+      receiver_id: receiver_id,
+      status: FriendStatusValue.DA_DONG_Y,
     });
-    if (!friend || friend.status === FriendStatusValue.DA_DONG_Y) {
-      throw new BadRequestException(
-        'Các bạn chưa là bạn bè, không thể bookmark',
-      );
+    if (!friend) {
+      throw new BadRequestException('Chưa là bạn bè');
     }
+    const findBookmarks = await this.findBookmarks(userId, receiver_id);
     if (findBookmarks) {
-      await this.bookmarksRepository.delete(findBookmarks.id);
-      return new PageResponseDto(findBookmarks);
+      throw new BadRequestException('Bookmark đã tồn tại');
     }
-    const bookmark = this.bookmarksRepository.create(params);
-    bookmark.sender_id = userId;
-    await this.bookmarksRepository.save(bookmark);
+    const bookmark = await this.bookmarksRepository.save({
+      sender_id: userId,
+      receiver_id: receiver_id,
+    });
     return new PageResponseDto(bookmark);
+  }
+
+  async delete(
+    userId: number,
+    receiver_id: number,
+  ): Promise<PageResponseDto<Bookmark>> {
+    const user = this.usersRepository.findOneBy({ id: receiver_id });
+    if (!user) {
+      throw new BadRequestException('Người dùng không tồn tại');
+    }
+    const friend = await this.friendRepository.findOneBy({
+      sender_id: userId,
+      receiver_id: receiver_id,
+      status: FriendStatusValue.DA_DONG_Y,
+    });
+    if (!friend) {
+      throw new BadRequestException('Chưa là bạn bè');
+    }
+    const findBookmarks = await this.findBookmarks(userId, receiver_id);
+    if (!findBookmarks) {
+      throw new BadRequestException('Bookmark không tồn tại');
+    }
+    await this.bookmarksRepository.delete({ id: findBookmarks.id });
+    return new PageResponseDto(findBookmarks);
   }
 }
