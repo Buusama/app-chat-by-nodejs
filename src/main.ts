@@ -5,8 +5,9 @@ import { useContainer } from 'class-validator';
 import { setupS3Configs } from './config/aws.config';
 import { setupApiDocument } from './config/swagger.config';
 import { CustomIoAdapter } from './modules/websocket/adapters';
+import { NestExpressApplication } from '@nestjs/platform-express';
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule);
+  const app = await NestFactory.create<NestExpressApplication>(AppModule);
   useContainer(app.select(AppModule), { fallbackOnErrors: true });
   app.useGlobalPipes(
     new ValidationPipe({

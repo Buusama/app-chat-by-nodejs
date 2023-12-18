@@ -25,7 +25,7 @@ export class Friend {
   @JoinColumn({ name: 'sender_id' })
   sender: User;
 
-  @ManyToOne(() => User, (user) => user.bookmarks)
+  @ManyToOne(() => User, (user) => user.id)
   @JoinColumn({ name: 'receiver_id' })
   receiver: User;
 }
