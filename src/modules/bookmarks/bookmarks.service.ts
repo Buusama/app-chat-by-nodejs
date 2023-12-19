@@ -36,12 +36,17 @@ export class BookmarksService extends PageService {
     if (!user) {
       throw new BadRequestException('Người dùng không tồn tại');
     }
-    const friend = await this.friendRepository.findOneBy({
+    const friend1 = await this.friendRepository.findOneBy({
       sender_id: userId,
       receiver_id: receiver_id,
       status: FriendStatusValue.DA_DONG_Y,
     });
-    if (!friend) {
+    const friend2 = await this.friendRepository.findOneBy({
+      sender_id: receiver_id,
+      receiver_id: userId,
+      status: FriendStatusValue.DA_DONG_Y,
+    });
+    if (!friend1 && !friend2) {
       throw new BadRequestException('Chưa là bạn bè');
     }
     const findBookmarks = await this.findBookmarks(userId, receiver_id);
@@ -63,12 +68,17 @@ export class BookmarksService extends PageService {
     if (!user) {
       throw new BadRequestException('Người dùng không tồn tại');
     }
-    const friend = await this.friendRepository.findOneBy({
+    const friend1 = await this.friendRepository.findOneBy({
       sender_id: userId,
       receiver_id: receiver_id,
       status: FriendStatusValue.DA_DONG_Y,
     });
-    if (!friend) {
+    const friend2 = await this.friendRepository.findOneBy({
+      sender_id: receiver_id,
+      receiver_id: userId,
+      status: FriendStatusValue.DA_DONG_Y,
+    });
+    if (!friend1 && !friend2) {
       throw new BadRequestException('Chưa là bạn bè');
     }
     const findBookmarks = await this.findBookmarks(userId, receiver_id);

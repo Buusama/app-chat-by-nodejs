@@ -32,6 +32,7 @@ export class NotificationsService {
         'user',
         'user.id = CASE WHEN status = 1 THEN friend.sender_id ELSE friend.receiver_id END',
       )
+      .orderBy('friend.updated_at', 'DESC')
       .getRawMany();
     return new PageResponseDto(notifications);
   }
