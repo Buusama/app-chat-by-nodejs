@@ -6,10 +6,10 @@ import {
   UpdateEvent,
   SoftRemoveEvent,
 } from 'typeorm';
-import { BaseEntity } from 'src/entities/base-entity.entity';
+import { BaseEntity } from '../entities/base-entity.entity';
 import { Injectable } from '@nestjs/common';
-import { AuditObserverService } from 'src/modules/observers/audit-observer.service';
-import { UserInterceptor } from 'src/interceptors/user-interceptor.interceptor';
+import { AuditObserverService } from '../modules/observers/audit-observer.service';
+import { UserInterceptor } from '../interceptors/user-interceptor.interceptor';
 import { UseInterceptors } from '@nestjs/common';
 
 @EventSubscriber()

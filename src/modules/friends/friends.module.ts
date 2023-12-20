@@ -1,11 +1,10 @@
-import { TypeOrmModule } from '@nestjs/typeorm';
-import { Bookmark } from 'src/entities/bookmark.entity';
-import { Friend } from 'src/entities/friend.entity';
-import { WebsocketModule } from '../websocket/websocket.module';
 import { Module } from '@nestjs/common';
-import { FriendsService } from './friends.service';
+import { TypeOrmModule } from '@nestjs/typeorm';
+import { Friend } from '../../entities/friend.entity';
+import { User } from '../../entities/user.entity';
+import { WebsocketModule } from '../websocket/websocket.module';
 import { FriendsController } from './friends.controller';
-import { User } from 'src/entities/user.entity';
+import { FriendsService } from './friends.service';
 
 @Module({
   imports: [TypeOrmModule.forFeature([User, Friend]), WebsocketModule],

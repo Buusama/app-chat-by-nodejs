@@ -1,6 +1,5 @@
 import { Repository, SelectQueryBuilder } from 'typeorm';
 import { PageDto } from './dto/page.dto';
-import { SortEnum } from 'src/commons/enums/sort/sort-enum';
 
 export class PageService {
   protected paginate<T>(

@@ -1,4 +1,4 @@
-import { verifyAccessToken } from 'src/supports/jwt';
+import { verifyAccessToken } from "../../../supports/jwt";
 import { IoAdapter } from '@nestjs/platform-socket.io';
 
 export class CustomIoAdapter extends IoAdapter {

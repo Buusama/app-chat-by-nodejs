@@ -13,8 +13,8 @@ import {
 } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
-import { EntityNotFoundErrorFilter } from 'src/exception_filters/entity-not-found-error.filter';
-import { TransformInterceptor } from 'src/interceptors/transform.interceptor';
+import { EntityNotFoundErrorFilter } from '../../exception_filters/entity-not-found-error.filter';
+import { TransformInterceptor } from '../../interceptors/transform.interceptor';
 import { NotificationsService } from './notifications.service';
 
 @ApiTags('notifications')

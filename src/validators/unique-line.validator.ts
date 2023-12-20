@@ -5,7 +5,7 @@ import {
   ValidationOptions,
   registerDecorator,
 } from 'class-validator';
-import { textareaToLines } from 'src/supports/helpers';
+import { textareaToLines } from '../supports/helpers';
 
 @ValidatorConstraint({ name: 'uniqueLine', async: true })
 export class UniqueLineValidator implements ValidatorConstraintInterface {

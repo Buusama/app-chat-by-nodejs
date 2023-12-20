@@ -6,8 +6,7 @@ import { JwtModule } from '@nestjs/jwt';
 import { JwtStrategy } from './strategies/jwt.strategy';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { User } from '../../entities/user.entity';
-import { UniqueColumnValidator } from 'src/validators/unique-column.validator';
-
+import { UniqueColumnValidator } from '../../validators/unique-column.validator';
 @Module({
   imports: [
     TypeOrmModule.forFeature([User]),

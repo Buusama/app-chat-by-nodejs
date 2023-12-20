@@ -1,14 +1,12 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
+import { FriendStatusValue } from '../../commons/enums/friend/status-enum';
+import { Bookmark } from '../../entities/bookmark.entity';
+import { Friend } from '../../entities/friend.entity';
+import { User } from '../../entities/user.entity';
 import { PageResponseDto } from '../pagination/dto/page-response.dto';
-import { CreateBookmarkDto } from './dto/create-bookmark.dto';
-import { PageMetaDto } from '../pagination/dto/page-meta.dto';
 import { PageService } from '../pagination/page.service';
-import { Bookmark } from 'src/entities/bookmark.entity';
-import { Friend } from 'src/entities/friend.entity';
-import { FriendStatusValue } from 'src/commons/enums/friend/status-enum';
-import { User } from 'src/entities/user.entity';
 
 @Injectable()
 export class BookmarksService extends PageService {

@@ -18,7 +18,7 @@ import { ApiBearerAuth, ApiOkResponse, ApiTags } from '@nestjs/swagger';
 import { AuthGuard } from '@nestjs/passport';
 import { CreateBookmarkDto } from './dto/create-bookmark.dto';
 import { PageResponseDto } from '../pagination/dto/page-response.dto';
-import { EntityNotFoundErrorFilter } from 'src/exception_filters/entity-not-found-error.filter';
+import { EntityNotFoundErrorFilter } from '../../exception_filters/entity-not-found-error.filter';
 
 @ApiTags('bookmarks')
 @UseInterceptors(TransformInterceptor)

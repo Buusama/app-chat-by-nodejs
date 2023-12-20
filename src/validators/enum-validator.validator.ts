@@ -1,3 +1,4 @@
+import { Injectable } from '@nestjs/common';
 import {
   ValidationArguments,
   ValidationOptions,
@@ -5,8 +6,6 @@ import {
   ValidatorConstraintInterface,
   registerDecorator,
 } from 'class-validator';
-import { Injectable } from '@nestjs/common';
-import { BaseEnum } from 'src/commons/enums/base-enum';
 
 @ValidatorConstraint({ name: 'enumValidator', async: true })
 @Injectable()

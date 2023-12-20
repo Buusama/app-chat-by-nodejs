@@ -5,7 +5,7 @@ import {
   isEmail,
   registerDecorator,
 } from 'class-validator';
-import { textareaToLines } from 'src/supports/helpers';
+import { textareaToLines } from '../supports/helpers';
 
 @ValidatorConstraint({ name: 'emailLine', async: true })
 export class EmailLineValidator implements ValidatorConstraintInterface {

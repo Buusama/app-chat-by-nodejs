@@ -5,7 +5,7 @@ import {
   CallHandler,
 } from '@nestjs/common';
 import { Observable } from 'rxjs';
-import { AuditObserverService } from 'src/modules/observers/audit-observer.service';
+import { AuditObserverService } from '../modules/observers/audit-observer.service';
 
 @Injectable()
 export class UserInterceptor implements NestInterceptor {

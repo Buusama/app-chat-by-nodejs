@@ -5,7 +5,7 @@ import {
   ValidatorConstraintInterface,
   registerDecorator,
 } from 'class-validator';
-import { textareaToLines } from 'src/supports/helpers';
+import { textareaToLines } from '../supports/helpers';
 
 @ValidatorConstraint({ name: 'maxLine', async: true })
 export class MaxLineValidator implements ValidatorConstraintInterface {

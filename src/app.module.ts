@@ -1,9 +1,9 @@
 import { Module } from '@nestjs/common';
 import applicationProvider from './providers';
 import applicationModular from './modules';
-import { UserSubscriber } from 'src/subcribers/user-subcriber.subcriber';
+import { UserSubscriber } from './subcribers/user-subcriber.subcriber';
 import { APP_INTERCEPTOR } from '@nestjs/core';
-import { UserInterceptor } from 'src/interceptors/user-interceptor.interceptor';
+import { UserInterceptor } from './interceptors/user-interceptor.interceptor';
 import { TrimValueInterceptor } from './interceptors/trim-value.interceptor';
 
 @Module({

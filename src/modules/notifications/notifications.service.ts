@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Friend } from 'src/entities/friend.entity';
+import { Friend } from '../../entities/friend.entity';
 import { Repository } from 'typeorm';
 import { PageResponseDto } from '../pagination/dto/page-response.dto';
 import { WebsocketGateway } from '../websocket/websocket.gateway';

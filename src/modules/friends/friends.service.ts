@@ -1,11 +1,10 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { FriendStatusValue } from 'src/commons/enums/friend/status-enum';
-import { Friend } from 'src/entities/friend.entity';
-import { User } from 'src/entities/user.entity';
+import { FriendStatusValue } from '../../commons/enums/friend/status-enum';
+import { Friend } from '../../entities/friend.entity';
+import { User } from '../../entities/user.entity';
 import { Repository } from 'typeorm';
 import { PageResponseDto } from '../pagination/dto/page-response.dto';
-import { UsersService } from '../users/users.service';
 import { WebsocketGateway } from '../websocket/websocket.gateway';
 import { ReplyFriendsDto } from './dto';
 
