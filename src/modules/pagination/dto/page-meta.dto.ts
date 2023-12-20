@@ -1,5 +1,4 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { GlobalEnumValue } from 'src/commons/enums/global-enum';
 export class PageMetaDto {
   @ApiProperty()
   readonly page: number;
@@ -24,7 +23,7 @@ export class PageMetaDto {
     this.take = pageOptionsDto.take;
     this.itemCount = itemCount;
     this.pageCount = Math.ceil(this.itemCount / this.take);
-    this.hasPreviousPage = this.page > GlobalEnumValue.PAGE_DEFAULT;
+    this.hasPreviousPage = this.page > 1;
     this.hasNextPage = this.page < this.pageCount;
   }
 }
