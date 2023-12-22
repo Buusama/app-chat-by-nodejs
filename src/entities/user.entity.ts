@@ -8,6 +8,7 @@ import {
 import * as bcrypt from 'bcrypt';
 import { Bookmark } from './bookmark.entity';
 import { Friend } from './friend.entity';
+import { Message } from './message.entity';
 
 @Entity('users')
 export class User {
@@ -57,4 +58,7 @@ export class User {
 
   @OneToMany(() => Friend, (friend) => friend.receiver)
   friends: Friend[];
+
+  @OneToMany(() => Message, (message) => message.receiver)
+  messages: Message[];
 }

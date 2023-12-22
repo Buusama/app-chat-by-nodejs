@@ -6,6 +6,7 @@ import { BookmarksModule } from './bookmarks/bookmarks.module';
 import { WebsocketModule } from './websocket/websocket.module';
 import { FriendsModule } from './friends/friends.module';
 import { NotificationsModule } from './notifications/notifications.module';
+import { ChatsModule } from './chats/chats.module';
 class ApplicationModular {
   public static register() {
     return [
@@ -17,6 +18,7 @@ class ApplicationModular {
       WebsocketModule,
       FriendsModule,
       NotificationsModule,
+      ChatsModule,
     ];
   }
 }

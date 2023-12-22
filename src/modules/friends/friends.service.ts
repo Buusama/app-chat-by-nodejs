@@ -1,22 +1,26 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
 import { FriendStatusValue } from '../../commons/enums/friend/status-enum';
 import { Friend } from '../../entities/friend.entity';
 import { User } from '../../entities/user.entity';
-import { Repository } from 'typeorm';
 import { PageResponseDto } from '../pagination/dto/page-response.dto';
+import { PageService } from '../pagination/page.service';
 import { WebsocketGateway } from '../websocket/websocket.gateway';
 import { ReplyFriendsDto } from './dto';
 
 @Injectable()
-export class FriendsService {
+export class FriendsService extends PageService {
   constructor(
     @InjectRepository(Friend)
     private readonly friendRepository: Repository<Friend>,
     @InjectRepository(User)
     private readonly usersRepository: Repository<User>,
     private ws: WebsocketGateway,
-  ) {}
+  ) {
+    super();
+  }
+
   async addFriend(
     userId: number,
     receiver_id: number,

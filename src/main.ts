@@ -20,7 +20,8 @@ async function bootstrap() {
     }),
   );
   setupApiDocument(app);
-  // setupS3Configs(); // uncomment this line if you want to use AWS S3
+  setupS3Configs(); // uncomment this line if you want to use AWS S3
+
   app.enableCors();
   app.useWebSocketAdapter(new CustomIoAdapter(app));
   await app.listen(3000);

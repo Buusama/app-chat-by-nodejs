@@ -20,4 +20,7 @@ export class GetListUsersDto extends PageDto {
 
   @ApiProperty({ required: false, enum: ProvinceValue })
   province: number;
+
+  @ApiProperty({ required: false })
+  search: string;
 }

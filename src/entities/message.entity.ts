@@ -1,14 +1,14 @@
 import {
   Column,
-  PrimaryGeneratedColumn,
   Entity,
-  ManyToOne,
   JoinColumn,
+  ManyToOne,
+  PrimaryGeneratedColumn,
 } from 'typeorm';
 import { User } from './user.entity';
 
-@Entity('friends')
-export class Friend {
+@Entity('messages')
+export class Message {
   @PrimaryGeneratedColumn()
   id: number;
 
@@ -19,13 +19,10 @@ export class Friend {
   receiver_id: number;
 
   @Column()
-  status: number;
+  content: string;
 
   @Column()
   created_at: Date;
-
-  @Column()
-  updated_at: Date;
 
   @ManyToOne(() => User, (user) => user.id)
   @JoinColumn({ name: 'sender_id' })
