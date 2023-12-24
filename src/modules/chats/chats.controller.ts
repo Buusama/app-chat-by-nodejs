@@ -47,11 +47,14 @@ export class ChatsController {
     @Req() req,
     @Param('id') chat_user_id: number,
     @Body() createTextMessageDto: CreateTextMessageDto,
-  ): Promise<Message> {
-    return this.chatsService.createTextMessage(
+  ): Promise<{ data: Message }> {
+    const message = await this.chatsService.createTextMessage(
       req.user.id,
       chat_user_id,
       createTextMessageDto,
     );
+    return {
+      data: message,
+    };
   }
 }
