@@ -31,10 +31,7 @@ export class UsersService extends PageService {
     getListUsersDto: GetListUsersDto,
     userId: number,
   ): Promise<PageResponseDto<User>> {
-    const queryBuilder = await this.paginate(
-      this.usersRepository,
-      getListUsersDto,
-    );
+    const queryBuilder = await this.usersRepository.createQueryBuilder('table');
     queryBuilder
       .select([
         'table.id as id',
@@ -64,38 +61,62 @@ export class UsersService extends PageService {
         search: `%${getListUsersDto.search}%`,
       });
     }
-    const template: string[] = [
-      getListUsersDto.level
-        ? `((1 - (ABS(table.level - ${getListUsersDto.level}) / ${getListUsersDto.level}))`
-        : '(1',
-      getListUsersDto.gender
-        ? `if(table.gender = ${getListUsersDto.gender}, 1, 0)`
-        : '1',
-      getListUsersDto.nationality
-        ? `if(table.nationality = '${getListUsersDto.nationality}', 1, 0)`
-        : '1',
-      getListUsersDto.province
-        ? `if(table.province = '${getListUsersDto.province}', 1, 0)`
-        : '1',
-      getListUsersDto.age
-        ? `(1- ABS(ROUND(DATEDIFF(CURDATE(), table.birthday) / 365, 0)-${getListUsersDto.age}) / ${getListUsersDto.age}) )/5*100`
-        : '1)/5*100',
-    ];
-    const selectFilter = template.join(' + ');
-
-    if (
-      getListUsersDto.age ||
-      getListUsersDto.gender ||
-      getListUsersDto.level ||
-      getListUsersDto.nationality ||
-      getListUsersDto.province
-    ) {
-      queryBuilder.addSelect(selectFilter, 'filter');
-      queryBuilder.orderBy('filter', 'DESC');
-    }
 
     const itemCount = await queryBuilder.getCount();
     const entities = await queryBuilder.getRawMany();
+    if (getListUsersDto.age ||
+      getListUsersDto.gender ||
+      getListUsersDto.level ||
+      getListUsersDto.nationality ||
+      getListUsersDto.province) {
+
+      entities.forEach(element => {
+        let filter = 0;
+        let weight = 0;
+
+        const { age, gender, level, nationality, province } = getListUsersDto;
+
+        if (level) {
+          const deviation = Math.abs(element.level - Number(level));
+          filter += deviation > Number(level) ? 0 : (1 - deviation / Number(level)) * 2;
+          weight += 2;
+        }
+        if (age) {
+          const today = new Date();
+          const deviation = Math.abs(Math.round((today.getTime() - new Date(element.birthday).getTime()) / (1000 * 3600 * 24 * 365)) - Number(age));
+          filter += deviation > Number(age) ? 0 : (1 - deviation / Number(age)) * 2;
+          weight += 2;
+        }
+        if (gender) {
+          filter += element.gender == gender ? 2 : 0;
+          weight += 2;
+        }
+        if (province) {
+          filter += element.province == province ? 1 : 0;
+          weight += 1;
+        }
+        if (nationality) {
+          filter += element.nationality == nationality ? 1 : 0;
+          weight += 1;
+        }
+        element.filter = weight > 0 ? (filter / weight) * 100 : 0;
+      });
+
+      entities.sort((a, b) => b.filter - a.filter);
+    }
+    //pagination
+    if (getListUsersDto.sort_by && getListUsersDto.sort_enum) {
+      entities.sort((a, b) => {
+        if (getListUsersDto.sort_by === 'filter') {
+          return getListUsersDto.sort_enum === 'ASC' ? a.filter - b.filter : b.filter - a.filter;
+        }
+        return getListUsersDto.sort_enum === 'ASC' ? a[getListUsersDto.sort_by] - b[getListUsersDto.sort_by] : b[getListUsersDto.sort_by] - a[getListUsersDto.sort_by];
+      });
+    }
+    if (getListUsersDto.skip != null && getListUsersDto.take != null) {
+      entities.splice(0, getListUsersDto.skip);
+      entities.splice(getListUsersDto.take, entities.length - getListUsersDto.take);
+    }
     const pageMeta = new PageMetaDto(getListUsersDto, itemCount);
     return new PageResponseDto(entities, pageMeta);
   }
