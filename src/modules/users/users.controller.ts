@@ -71,12 +71,12 @@ export class UsersController {
   )
   async update(
     @Body() updateUserDto: UpdateUserDto,
+    @Req() req: any,
     @UploadedFiles()
-    files: {
+    files?: {
       avatar?: Express.Multer.File;
       certificate?: Express.Multer.File;
     },
-    @Req() req: any,
   ) {
     return this.usersService.updateMember(req.user.id, updateUserDto, files);
   }

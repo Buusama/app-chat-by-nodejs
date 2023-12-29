@@ -274,10 +274,10 @@ export class UsersService extends PageService {
   async updateMember(
     userId: number,
     updateUserDto: UpdateUserDto,
-    files: { avatar?: Express.Multer.File; certificate?: Express.Multer.File },
+    files?: { avatar?: Express.Multer.File; certificate?: Express.Multer.File },
   ) {
-    const avatar = files.avatar ? files.avatar[0] : null;
-    const certificate = files.certificate ? files.certificate[0] : null;
+    const avatar = files?.avatar ? files.avatar[0] : null;
+    const certificate = files?.certificate ? files.certificate[0] : null;
 
     const existingUser = await this.usersRepository.findOneByOrFail({
       id: userId,
