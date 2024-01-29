@@ -48,6 +48,9 @@ export class User {
   @Column()
   nationality: string;
 
+  @Column()
+  role: number;
+
   @BeforeInsert()
   async hashPassword() {
     this.password = await bcrypt.hash(this.password, 10);

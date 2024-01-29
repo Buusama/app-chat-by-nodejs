@@ -24,6 +24,7 @@ export default class CreateUsers extends Seeder {
         password: await bcrypt.hash('password', 10),
         birthday: '1999-01-01',
         nationality: 'VN',
+        role: 1
       },
       {
         name: 'Lương Thị Tâm',
@@ -37,6 +38,7 @@ export default class CreateUsers extends Seeder {
         password: await bcrypt.hash('password', 10),
         birthday: '1999-01-01',
         nationality: 'VN',
+        role: 0
       },
     ];
 

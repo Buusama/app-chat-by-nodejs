@@ -55,6 +55,7 @@ export class UserFactory extends Factory<User> {
       province: faker.number.int({ min: 1, max: 63 }).toString(),
       certificate: faker.image.avatar(),
       nationality,
+      role: faker.number.int({ min: 0, max: 1 }),
     };
   }
 }
